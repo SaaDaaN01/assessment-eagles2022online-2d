@@ -2,6 +2,7 @@ const router = require('express').Router();
 const render = require('../lib/renderTemplate');
 const Registration = require('../views/SignUpForm');
 const { User } = require('../db/models');
+const { Post } = require('../db/models')
 const bcrypt = require('bcrypt'); // подключаем bcrypt
 const soldRound = 10; // добавляем шифрование 
 
@@ -22,7 +23,7 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res) => {
   const { name, pass, email } = req.body;
- 
+  const usersname = await User.findAll({raw: true})
 //   console.log(req.body);
   // const user = {name, pass};
 //   console.log(user);
@@ -34,7 +35,7 @@ router.post('/signup', async (req, res) => {
   
   const userInfo = req.session?.user;
 
-  render(HomePage, { userInfo }, res)
+  render(HomePage, { userInfo, usersname }, res)
 //   res.redirect('/')
   // render(EntriesList, { entries, username: name }, res);
   
@@ -46,10 +47,10 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async(req, res) => {
   
-  const { name, pass } = req.body;
+  const { email, pass } = req.body;
   let user = {};
  
-  user = await User.findOne({where: { name: name }});
+  user = await User.findOne({where: { email: email }});
   if(!user) return failAuth(res, 'неверное имя или пароль!');
   // console.log(user);
   
@@ -58,7 +59,9 @@ router.post('/login', async(req, res) => {
   if(!isValidPassword) return failAuth(res, 'неверное имя или пароль!!!');
   req.session.user = user;
   const userInfo = req.session?.user;
-  render(HomePage, { userInfo }, res)
+  const postLibrary = await Post.findAll({raw: true})
+  const usersname = await User.findAll({raw: true})
+  render(HomePage, { userInfo, postLibrary, usersname }, res)
   
 })
 
@@ -71,7 +74,7 @@ const destroySession = (req, res, next) => {
      if (err) return res.send(err.message);
      
      res.clearCookie('sid');
-     render(HomePage, {}, res);
+     res.redirect('/')
   })
  };
 

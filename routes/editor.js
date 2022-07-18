@@ -3,7 +3,7 @@ const render = require('../lib/renderTemplate');
 const CreatePost = require('../views/CreatePost');
 const { Post } = require('../db/models')
 const Editor = require('../views/Editor')
-const MapOrders = require('../views/Posts');
+// const MapOrders = require('../views/Posts');
 
 router.get('/', (req, res) => {
   const userInfo = req.session?.user

@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const render = require('../lib/renderTemplate');
-const Posts = require('../views/Posts');
+// const Posts = require('../views/Posts');
 const { Post } = require('../db/models');
 // const action = require('../db/models/action');
 const Editor = require('../views/Editor');
+const HomePage = require('../views/Home');
 
 
 
 router.get('/', async (req, res) => {
   const userInfo = req.session?.user
-  const lib = await Post.findAll({raw: true})
-  render(Posts, {userInfo, lib}, res)
+  const postLibrary = await Post.findAll({raw: true})
+  render(HomePage, {userInfo, postLibrary}, res)
 });
 
 

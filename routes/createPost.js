@@ -2,7 +2,8 @@ const router = require('express').Router();
 const render = require('../lib/renderTemplate');
 const CreateOrder = require('../views/CreatePost');
 const { Post } = require('../db/models')
-const MapOrder = require('../views/Posts')
+// const MapOrder = require('../views/Posts')
+
 
 
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/posts', async (req, res) => {
+router.post('/', async (req, res) => {
   const userInfo = req.session?.user
   console.log(req.body)
   const {img, post } = req.body;
@@ -28,7 +29,7 @@ router.post('/posts', async (req, res) => {
   //  res.send(`error: ${err.message}`);
   res.json({err: err.message});
  }
- res.redirect('/posts') 
+ res.redirect('/') 
 //  dlya otrisovky s obnovoi saita
 });
 
