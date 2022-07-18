@@ -1,0 +1,17 @@
+{
+  "name": "assessment-2",
+  "version": "0.1.0",
+  "description": "Щебетатель",
+  "private": true,
+  "scripts": {
+    
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  }
+}
